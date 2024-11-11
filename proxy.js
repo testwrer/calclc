@@ -11,12 +11,22 @@ function checkCode() {
   }
 }
 
-function proxySite() {
-  let urlInput = document.getElementById('url').value;
-  if (urlInput && isValidUrl(urlInput)) {
-    let proxyUrl = `https://v2.uv0.dev/${urlInput}`;
-    document.getElementById('proxyFrame').src = proxyUrl;
-    document.getElementById('proxyContainer').style.display = 'block';
+function startProxy() {
+  let url = document.getElementById('url').value;
+  if (url && isValidUrl(url)) {
+    // Show loading screen
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('proxyContainer').style.display = 'none';
+    
+    // Use proxy.moe as an alternative
+    let proxyUrl = `https://proxy.moe/${url}`;
+    
+    // Wait for the page to load, then embed it
+    setTimeout(() => {
+      document.getElementById('proxyFrame').src = proxyUrl;
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('proxyContainer').style.display = 'block';
+    }, 2000);  // Simulating loading time
   }
 }
 
@@ -26,14 +36,5 @@ function isValidUrl(url) {
     return true;
   } catch (e) {
     return false;
-  }
-}
-
-function startProxy() {
-  let url = document.getElementById('url').value;
-  if (url && isValidUrl(url)) {
-    let proxyUrl = `https://v2.uv0.dev/${url}`;
-    document.getElementById('proxyFrame').src = proxyUrl;
-    document.getElementById('proxyContainer').style.display = 'block';
   }
 }
